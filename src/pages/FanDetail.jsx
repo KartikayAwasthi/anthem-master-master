@@ -230,7 +230,7 @@ const FanDetail = () => {
   }
 
   return (
-    <div className="bg-[#1c1c1c] text-white min-h-screen py-16 lg:py-20">
+    <div className="bg-[#1c1c1c] text-white min-h-screen pt-24 pb-16 lg:pt-28 lg:pb-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           {/* Fan Image */}

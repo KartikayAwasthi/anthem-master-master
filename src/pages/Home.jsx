@@ -12,23 +12,28 @@ const Home = () => {
   return (
     <div className="w-full min-h-0 overflow-x-hidden snap-y snap-mandatory scroll-smooth bg-[#1c1c1c] text-white">
       {/* ✅ Video Background Hero */}
-      <section className="h-[60vh] w-full flex items-center justify-center snap-start bg-[#1c1c1c]">
-        <div className="fixed inset-0 z-0">
+      <section className="relative h-screen min-h-[600px] w-full flex items-center justify-center snap-start bg-[#1c1c1c] overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <video
-            className="w-full h-screen object-cover"
+            className="w-full h-full object-cover sm:object-center"
+            style={{
+              objectPosition: window.innerWidth < 768 ? 'center center' : 'center center'
+            }}
             src="/anthem-background.mp4"
             autoPlay
             loop
             muted
             playsInline
+            preload="metadata"
           >
             Your browser does not support the video tag.
           </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#1c1c1c]/80 via-[#1c1c1c]/60 to-[#1c1c1c]/90 pointer-events-none" />
+          {/* Responsive overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40 sm:bg-black/20"></div>
         </div>
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center h-screen">
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center h-full px-4 sm:px-6 lg:px-8">
           <motion.h1 
-            className="text-5xl md:text-7xl font-bold mb-4 text-white"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 text-white drop-shadow-2xl text-center"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
@@ -36,7 +41,7 @@ const Home = () => {
             Anthem
           </motion.h1>
           <motion.p 
-            className="text-xl md:text-2xl text-gray-300"
+            className="text-lg sm:text-xl md:text-2xl text-gray-200 drop-shadow-lg text-center max-w-2xl"
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
