@@ -174,7 +174,10 @@ function CeilingFan({ modelUrl, rotate, fanSpeed }) {
 
 /* --- Main Room3D Component --- */
 export default function Room3D({ 
-  wallColor: propWallColor, 
+  wallColor: propWallColor,
+  backWallColor: propBackWallColor,
+  leftWallColor: propLeftWallColor,
+  rightWallColor: propRightWallColor,
   fanModel: propFanModel, 
   isRotating: propIsRotating, 
   fanSpeed: propFanSpeed, 
@@ -182,6 +185,9 @@ export default function Room3D({
   isBulbOn: propIsBulbOn 
 }) {
   const [wallColor, setWallColor] = useState(propWallColor || 'lightblue');
+  const [backWallColor, setBackWallColor] = useState(propBackWallColor || propWallColor || 'lightblue');
+  const [leftWallColor, setLeftWallColor] = useState(propLeftWallColor || propWallColor || 'lightblue');
+  const [rightWallColor, setRightWallColor] = useState(propRightWallColor || propWallColor || 'lightblue');
   const [fanModel, setFanModel] = useState(propFanModel || '/fan1.glb');
   const [isRotating, setIsRotating] = useState(propIsRotating !== undefined ? propIsRotating : true);
   const [fanSpeed, setFanSpeed] = useState(propFanSpeed || 0.1);
@@ -190,8 +196,26 @@ export default function Room3D({
 
   // Update state when props change
   React.useEffect(() => {
-    if (propWallColor) setWallColor(propWallColor);
+    if (propWallColor) {
+      setWallColor(propWallColor);
+      // If individual wall colors aren't set, use the general wallColor
+      if (!propBackWallColor) setBackWallColor(propWallColor);
+      if (!propLeftWallColor) setLeftWallColor(propWallColor);
+      if (!propRightWallColor) setRightWallColor(propWallColor);
+    }
   }, [propWallColor]);
+
+  React.useEffect(() => {
+    if (propBackWallColor) setBackWallColor(propBackWallColor);
+  }, [propBackWallColor]);
+
+  React.useEffect(() => {
+    if (propLeftWallColor) setLeftWallColor(propLeftWallColor);
+  }, [propLeftWallColor]);
+
+  React.useEffect(() => {
+    if (propRightWallColor) setRightWallColor(propRightWallColor);
+  }, [propRightWallColor]);
 
   React.useEffect(() => {
     if (propFanModel) setFanModel(propFanModel);
@@ -221,9 +245,13 @@ export default function Room3D({
       <pointLight position={[-3, 3, 2]} intensity={0.5} />
       <spotLight position={[0, 4, 0]} intensity={isBulbOn ? 0.8 : 0} />
       <Suspense fallback={null}>
-        <Wall position={[0, 0, -5]} rotation={[0, 0, 0]} color={wallColor} />
-        <Wall position={[-5, 0, 0]} rotation={[0, Math.PI / 2, 0]} color={wallColor} />
-        <Wall position={[5, 0, 0]} rotation={[0, -Math.PI / 2, 0]} color={wallColor} />
+        {/* Back Wall */}
+        <Wall position={[0, 0, -5]} rotation={[0, 0, 0]} color={backWallColor} />
+        {/* Left Wall */}
+        <Wall position={[-5, 0, 0]} rotation={[0, Math.PI / 2, 0]} color={leftWallColor} />
+        {/* Right Wall */}
+        <Wall position={[5, 0, 0]} rotation={[0, -Math.PI / 2, 0]} color={rightWallColor} />
+        {/* Ceiling */}
         <Wall position={[0, 5, 0]} rotation={[-Math.PI / 2, 0, 0]} color={'white'} />
         <TexturedWall position={[-2, -1, -4.98]} rotation={[0, 0, 0]} textureUrl="/wall-texture.jpg" />
         <Floor position={[0, -5, 0]} rotation={[Math.PI / 2, 0, 0]} />

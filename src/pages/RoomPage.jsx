@@ -4,6 +4,9 @@ import ColorChangeTransition from '../components/ColorChangeTransition';
 
 const RoomPage = () => {
   const [wallColor, setWallColor] = useState('lightblue');
+  const [backWallColor, setBackWallColor] = useState('lightblue');
+  const [leftWallColor, setLeftWallColor] = useState('lightblue');
+  const [rightWallColor, setRightWallColor] = useState('lightblue');
   const [fanModel, setFanModel] = useState('/fan1.glb');
   const [isRotating, setIsRotating] = useState(true);
   const [fanSpeed, setFanSpeed] = useState(0.1);
@@ -18,20 +21,32 @@ const RoomPage = () => {
       // Delay the actual color change to sync with animation
       setTimeout(() => {
         setWallColor(color);
+        setBackWallColor(color);
+        setLeftWallColor(color);
+        setRightWallColor(color);
       }, 600);
     }
   };
 
-  // Handle color picker change with transition animation
-  const handleColorPickerChange = (e) => {
-    const newColor = e.target.value;
-    if (wallColor !== newColor) {
-      setShowColorTransition(true);
-      // Delay the actual color change to sync with animation
-      setTimeout(() => {
-        setWallColor(newColor);
-      }, 600);
-    }
+  // Handle individual wall color changes
+  const handleIndividualWallColorChange = (wallType, color) => {
+    setShowColorTransition(true);
+    // Delay the actual color change to sync with animation
+    setTimeout(() => {
+      switch(wallType) {
+        case 'back':
+          setBackWallColor(color);
+          break;
+        case 'left':
+          setLeftWallColor(color);
+          break;
+        case 'right':
+          setRightWallColor(color);
+          break;
+        default:
+          break;
+      }
+    }, 600);
   };
 
   // Hide transition animation
@@ -59,6 +74,9 @@ const RoomPage = () => {
           <div className="lg:flex-1 bg-[#2f2f2f] rounded-lg overflow-hidden order-1 lg:order-2 h-[50vh] sm:h-[60vh] lg:h-[70vh]">
             <Room3D 
               wallColor={wallColor}
+              backWallColor={backWallColor}
+              leftWallColor={leftWallColor}
+              rightWallColor={rightWallColor}
               fanModel={fanModel}
               isRotating={isRotating}
               fanSpeed={fanSpeed}
@@ -72,39 +90,91 @@ const RoomPage = () => {
             <h3 className="text-lg sm:text-xl font-semibold text-[#e49385] mb-4 sm:mb-6">Room Controls</h3>
             <div className="space-y-4 sm:space-y-6">
               
-              {/* Wall Color Control */}
+              {/* Wall Color Controls */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Wall Color
+                <label className="block text-sm font-medium text-gray-300 mb-3">
+                  Wall Colors
                 </label>
                 
-                {/* Preset Colors Dropdown */}
-                <select
-                  value={wallColor}
-                  onChange={(e) => handleWallColorChange(e.target.value)}
-                  className="w-full bg-[#1c1c1c] border border-[#ba6a5a] rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#e49385] mb-3 text-sm sm:text-base"
-                >
-                  <option value="lightblue">Light Blue</option>
-                  <option value="beige">Beige</option>
-                  <option value="white">White</option>
-                  <option value="lightgray">Light Gray</option>
-                  <option value="cream">Cream</option>
-                  <option value="custom">Custom Color</option>
-                </select>
+                {/* All Walls Color Control */}
+                <div className="mb-4 p-3 bg-[#1c1c1c] rounded-lg border border-[#ba6a5a]/30">
+                  <label className="block text-xs font-medium text-gray-400 mb-2">
+                    All Walls (Quick Set)
+                  </label>
+                  <select
+                    value={wallColor}
+                    onChange={(e) => handleWallColorChange(e.target.value)}
+                    className="w-full bg-[#2f2f2f] border border-[#ba6a5a] rounded px-2 py-1 text-white focus:outline-none focus:border-[#e49385] text-xs"
+                  >
+                    <option value="lightblue">Light Blue</option>
+                    <option value="beige">Beige</option>
+                    <option value="white">White</option>
+                    <option value="lightgray">Light Gray</option>
+                    <option value="cream">Cream</option>
+                  </select>
+                </div>
 
-                {/* Custom Color Picker */}
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <label className="text-xs sm:text-sm text-gray-400">Custom:</label>
-                  <input
-                    type="color"
-                    value={typeof wallColor === 'string' && wallColor.startsWith('#') ? wallColor : '#87CEEB'}
-                    onChange={handleColorPickerChange}
-                    className="w-10 h-6 sm:w-12 sm:h-8 rounded border border-[#ba6a5a] bg-transparent cursor-pointer"
-                    title="Pick a custom wall color"
-                  />
-                  <span className="text-xs text-gray-500 flex-1 hidden sm:block">
-                    {typeof wallColor === 'string' && wallColor.startsWith('#') ? wallColor.toUpperCase() : 'Select from dropdown or pick custom'}
-                  </span>
+                {/* Individual Wall Controls */}
+                <div className="space-y-3">
+                  {/* Back Wall */}
+                  <div className="flex items-center justify-between p-2 bg-[#1c1c1c] rounded border border-[#ba6a5a]/20">
+                    <label className="text-xs text-gray-300 font-medium">Back Wall:</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={typeof backWallColor === 'string' && backWallColor.startsWith('#') ? backWallColor : '#87CEEB'}
+                        onChange={(e) => handleIndividualWallColorChange('back', e.target.value)}
+                        className="w-8 h-6 rounded border border-[#ba6a5a] bg-transparent cursor-pointer"
+                        title="Pick back wall color"
+                      />
+                      <button
+                        onClick={() => handleIndividualWallColorChange('back', 'lightblue')}
+                        className="px-2 py-1 text-xs bg-[#ba6a5a] text-white rounded hover:bg-[#e49385] transition-colors"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Left Wall */}
+                  <div className="flex items-center justify-between p-2 bg-[#1c1c1c] rounded border border-[#ba6a5a]/20">
+                    <label className="text-xs text-gray-300 font-medium">Left Wall:</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={typeof leftWallColor === 'string' && leftWallColor.startsWith('#') ? leftWallColor : '#87CEEB'}
+                        onChange={(e) => handleIndividualWallColorChange('left', e.target.value)}
+                        className="w-8 h-6 rounded border border-[#ba6a5a] bg-transparent cursor-pointer"
+                        title="Pick left wall color"
+                      />
+                      <button
+                        onClick={() => handleIndividualWallColorChange('left', 'lightblue')}
+                        className="px-2 py-1 text-xs bg-[#ba6a5a] text-white rounded hover:bg-[#e49385] transition-colors"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Right Wall */}
+                  <div className="flex items-center justify-between p-2 bg-[#1c1c1c] rounded border border-[#ba6a5a]/20">
+                    <label className="text-xs text-gray-300 font-medium">Right Wall:</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="color"
+                        value={typeof rightWallColor === 'string' && rightWallColor.startsWith('#') ? rightWallColor : '#87CEEB'}
+                        onChange={(e) => handleIndividualWallColorChange('right', e.target.value)}
+                        className="w-8 h-6 rounded border border-[#ba6a5a] bg-transparent cursor-pointer"
+                        title="Pick right wall color"
+                      />
+                      <button
+                        onClick={() => handleIndividualWallColorChange('right', 'lightblue')}
+                        className="px-2 py-1 text-xs bg-[#ba6a5a] text-white rounded hover:bg-[#e49385] transition-colors"
+                      >
+                        Reset
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
 
