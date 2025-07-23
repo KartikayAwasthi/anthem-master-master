@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Star, Zap, Volume2, Shield } from "lucide-react";
+import { ArrowLeft, Star, Zap, Volume2, Shield, ChevronDown, ChevronUp } from "lucide-react";
 import ColorChangeTransition from "../components/ColorChangeTransition";
 
 // Import fan images
@@ -179,6 +179,9 @@ const FanDetail = () => {
   
   // State for color change transition
   const [showColorTransition, setShowColorTransition] = useState(false);
+  
+  // State for specifications dropdown
+  const [isSpecsOpen, setIsSpecsOpen] = useState(false);
   
   // Initialize selected color when fan data is available
   useEffect(() => {
@@ -380,22 +383,53 @@ const FanDetail = () => {
           </motion.div>
         </div>
 
-        {/* Specifications Table */}
+        {/* Specifications Dropdown */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-12 lg:mt-16 bg-[#2f2f2f] rounded-xl p-6 lg:p-8"
         >
-          <h3 className="text-2xl font-semibold text-[#e49385] mb-6">Technical Specifications</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-            {Object.entries(fan.specifications).map(([key, value]) => (
-              <div key={key} className="flex justify-between items-center border-b border-[#444] pb-3 mb-2">
-                <span className="text-gray-400 text-sm lg:text-base">{key}</span>
-                <span className="text-white font-medium text-sm lg:text-base text-right">{value}</span>
-              </div>
-            ))}
+          <div 
+            className="flex justify-between items-center cursor-pointer"
+            onClick={() => setIsSpecsOpen(!isSpecsOpen)}
+          >
+            <h3 className="text-2xl font-semibold text-[#e49385]">Technical Specifications</h3>
+            <motion.div
+              animate={{ rotate: isSpecsOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="text-[#e49385]"
+            >
+              {isSpecsOpen ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+            </motion.div>
           </div>
+          
+          <motion.div
+            initial={false}
+            animate={{ 
+              height: isSpecsOpen ? "auto" : 0,
+              opacity: isSpecsOpen ? 1 : 0
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="pt-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+                {Object.entries(fan.specifications).map(([key, value], index) => (
+                  <motion.div 
+                    key={key} 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: isSpecsOpen ? 1 : 0, y: isSpecsOpen ? 0 : 10 }}
+                    transition={{ duration: 0.3, delay: isSpecsOpen ? index * 0.05 : 0 }}
+                    className="flex justify-between items-center border-b border-[#444] pb-3 mb-2"
+                  >
+                    <span className="text-gray-400 text-sm lg:text-base">{key}</span>
+                    <span className="text-white font-medium text-sm lg:text-base text-right">{value}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
 

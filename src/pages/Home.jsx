@@ -1,15 +1,9 @@
 import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Images
-import banner1 from "../assets/banner1.webp";
-import banner2 from "../assets/banner2.webp";
-import banner3 from "../assets/banner3.jpg";
-import banner4 from "../assets/banner4.webp";
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
 import inaraImg from "../assets/Inara/Pearl white inara0110.png";
 import evaaraImg from "../assets/eVaara/fan3.png"; // eVaara fan image
@@ -17,39 +11,39 @@ import evaaraImg from "../assets/eVaara/fan3.png"; // eVaara fan image
 const Home = () => {
   return (
     <div className="w-full min-h-0 overflow-x-hidden snap-y snap-mandatory scroll-smooth bg-[#1c1c1c] text-white">
-      {/* ✅ Hero Carousel */}
+      {/* ✅ Video Background Hero */}
       <section className="h-[60vh] w-full flex items-center justify-center snap-start bg-[#1c1c1c]">
         <div className="fixed inset-0 z-0">
-          <Carousel
+          <video
+            className="w-full h-screen object-cover"
+            src="/anthem-background.mp4"
             autoPlay
-            infiniteLoop
-            showThumbs={false}
-            showStatus={false}
-            showArrows={false}
-            interval={3000}
-            animation="fade"
-            transitionTime={1000}
-            className="w-full h-screen"
-            renderIndicator={(_, isSelected) =>
-              <span
-                className={`inline-block mx-1 w-3 h-3 rounded-full ${isSelected ? "bg-[#ba6a5a]" : "bg-gray-600"}`}
-              />
-            }
+            loop
+            muted
+            playsInline
           >
-            {[banner1, banner2, banner3, banner4].map((img, i) => (
-              <div key={i}>
-                <img
-                  src={img}
-                  alt={`Banner ${i + 1}`}
-                  className="object-cover w-full h-screen"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-            ))}
-          </Carousel>
+            Your browser does not support the video tag.
+          </video>
           <div className="absolute inset-0 bg-gradient-to-b from-[#1c1c1c]/80 via-[#1c1c1c]/60 to-[#1c1c1c]/90 pointer-events-none" />
         </div>
-        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center h-screen" />
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center h-screen">
+          <motion.h1 
+            className="text-5xl md:text-7xl font-bold mb-4 text-white"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+          >
+            Anthem
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+          >
+            Premium Ceiling Fans
+          </motion.p>
+        </div>
       </section>
 
       {/* ✅ Top Picks */}
