@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Star, Zap, Volume2, Shield } from "lucide-react";
+import ColorChangeTransition from "../components/ColorChangeTransition";
 
 // Import fan images
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
@@ -176,6 +177,9 @@ const FanDetail = () => {
   // State for selected color (for eVaara and Inara)
   const [selectedColor, setSelectedColor] = useState(null);
   
+  // State for color change transition
+  const [showColorTransition, setShowColorTransition] = useState(false);
+  
   // Initialize selected color when fan data is available
   useEffect(() => {
     if ((fanId === "evaara" || fanId === "inara" || fanId === "skyro") && fan?.colors) {
@@ -184,6 +188,22 @@ const FanDetail = () => {
       setSelectedColor(null);
     }
   }, [fanId, fan]);
+
+  // Handle color change with transition animation
+  const handleColorChange = (color) => {
+    if (selectedColor?.name !== color.name) {
+      setShowColorTransition(true);
+      // Delay the actual color change to sync with animation
+      setTimeout(() => {
+        setSelectedColor(color);
+      }, 600);
+    }
+  };
+
+  // Hide transition animation
+  const hideColorTransition = () => {
+    setShowColorTransition(false);
+  };
   
   // Get current image based on selected color or default fan image
   const getCurrentImage = () => {
@@ -240,7 +260,7 @@ const FanDetail = () => {
                   {fan.colors.map((color, index) => (
                     <motion.button
                       key={index}
-                      onClick={() => setSelectedColor(color)}
+                      onClick={() => handleColorChange(color)}
                       className={`relative group flex flex-col items-center gap-3 p-4 rounded-lg border-2 transition-all duration-300 ${
                         selectedColor?.name === color.name
                           ? "border-[#ba6a5a] bg-[#ba6a5a]/10"
@@ -378,6 +398,12 @@ const FanDetail = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Color Change Transition Animation */}
+      <ColorChangeTransition 
+        isVisible={showColorTransition} 
+        onComplete={hideColorTransition} 
+      />
     </div>
   );
 };

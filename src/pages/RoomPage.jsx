@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Room3D from '../components/Room3D';
+import ColorChangeTransition from '../components/ColorChangeTransition';
 
 const RoomPage = () => {
   const [wallColor, setWallColor] = useState('lightblue');
@@ -8,6 +9,35 @@ const RoomPage = () => {
   const [fanSpeed, setFanSpeed] = useState(0.1);
   const [showFurniture, setShowFurniture] = useState(true);
   const [isBulbOn, setIsBulbOn] = useState(true);
+  const [showColorTransition, setShowColorTransition] = useState(false);
+
+  // Handle wall color change with transition animation
+  const handleWallColorChange = (color) => {
+    if (wallColor !== color) {
+      setShowColorTransition(true);
+      // Delay the actual color change to sync with animation
+      setTimeout(() => {
+        setWallColor(color);
+      }, 600);
+    }
+  };
+
+  // Handle color picker change with transition animation
+  const handleColorPickerChange = (e) => {
+    const newColor = e.target.value;
+    if (wallColor !== newColor) {
+      setShowColorTransition(true);
+      // Delay the actual color change to sync with animation
+      setTimeout(() => {
+        setWallColor(newColor);
+      }, 600);
+    }
+  };
+
+  // Hide transition animation
+  const hideColorTransition = () => {
+    setShowColorTransition(false);
+  };
 
   return (
     <div className="min-h-screen bg-[#1c1c1c] text-white pt-16 sm:pt-20">
@@ -51,7 +81,7 @@ const RoomPage = () => {
                 {/* Preset Colors Dropdown */}
                 <select
                   value={wallColor}
-                  onChange={(e) => setWallColor(e.target.value)}
+                  onChange={(e) => handleWallColorChange(e.target.value)}
                   className="w-full bg-[#1c1c1c] border border-[#ba6a5a] rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#e49385] mb-3 text-sm sm:text-base"
                 >
                   <option value="lightblue">Light Blue</option>
@@ -68,7 +98,7 @@ const RoomPage = () => {
                   <input
                     type="color"
                     value={typeof wallColor === 'string' && wallColor.startsWith('#') ? wallColor : '#87CEEB'}
-                    onChange={(e) => setWallColor(e.target.value)}
+                    onChange={handleColorPickerChange}
                     className="w-10 h-6 sm:w-12 sm:h-8 rounded border border-[#ba6a5a] bg-transparent cursor-pointer"
                     title="Pick a custom wall color"
                   />
@@ -168,6 +198,13 @@ const RoomPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Color Change Transition Animation */}
+      <ColorChangeTransition 
+        isVisible={showColorTransition} 
+        onComplete={hideColorTransition}
+        type="wall"
+      />
     </div>
   );
 };
