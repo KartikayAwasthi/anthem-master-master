@@ -253,7 +253,6 @@ export default function Room3D({
         <Wall position={[5, 0, 0]} rotation={[0, -Math.PI / 2, 0]} color={rightWallColor} />
         {/* Ceiling */}
         <Wall position={[0, 5, 0]} rotation={[-Math.PI / 2, 0, 0]} color={'white'} />
-        <TexturedWall position={[-2, -1, -4.98]} rotation={[0, 0, 0]} textureUrl="/wall-texture.jpg" />
         <Floor position={[0, -5, 0]} rotation={[Math.PI / 2, 0, 0]} />
         {showFurniture && <Window position={[2, 1, -4.95]} />}
         {showFurniture && <Bed position={[-2, -4.2, -2]} />}
