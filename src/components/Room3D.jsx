@@ -214,7 +214,7 @@ export default function Room3D({
   }, [propIsBulbOn]);
 
   return (
-    <Canvas camera={{ position: [0, 0, 15] }} shadows>
+    <Canvas camera={{ position: [0, 0, 8] }} shadows>
       <ambientLight intensity={0.3} />
       <directionalLight position={[10, 10, 5]} intensity={1.2} castShadow />
       <pointLight position={[3, 3, 2]} intensity={0.5} />
