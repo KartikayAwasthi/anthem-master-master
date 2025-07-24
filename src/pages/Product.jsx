@@ -14,7 +14,6 @@ const Product = () => {
     { name: "SKYRO", image: skyroImg, id: "skyro", price: "₹3,999", desc: "Premium BLDC technology with whisper-quiet operation" },
     { name: "INARA", image: inaraImg, id: "inara", price: "₹4,499", desc: "Smart home ready with LED lighting integration" },
     { name: "eVAARA", image: evaaraImg, id: "evaara", price: "₹3,699", desc: "Exceptional value with modern aesthetics & efficiency" },
-    { name: "SPINZ", image: fanRotatingGif, id: "spinz", price: "₹4,999", desc: "Revolutionary rotating design with 360° coverage" },
   ];
 
   const pedestalFans = [
@@ -87,7 +86,7 @@ const Product = () => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {ceilingFans.map((fan, index) => (
             <Link key={index} to={`/fan/${fan.id}`}>
               <motion.div
@@ -278,3 +277,4 @@ const Product = () => {
 };
 
 export default Product;
+
