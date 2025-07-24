@@ -32,9 +32,6 @@ function App() {
                     <section id="home" className="py-8">
                       <Home />
                     </section>
-                    <section id="products" className="py-8">
-                      <Products />
-                    </section>
                     <section id="about" className="py-8">
                       <About />
                     </section>
@@ -50,6 +47,9 @@ function App() {
                   </>
                 }
               />
+
+              {/* Dedicated Products page */}
+              <Route path="/products" element={<Products />} />
 
               {/* Fan detail page */}
               <Route path="/fan/:fanId" element={<FanDetail />} />
