@@ -13,14 +13,17 @@ import FanDetail from "./pages/FanDetail";
 import RoomPage from "./pages/RoomPage";
 import LoadingScreen from "./components/LoadingScreen";
 import PageTransition from "./components/PageTransition";
+import ScrollToTop from "./components/ScrollToTop";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 import { LoadingProvider } from "./contexts/LoadingContext";
 
 function App() {
   return (
     <LoadingProvider>
-      <div className="scroll-smooth bg-[#1c1c1c] text-white">
+        <div className="scroll-smooth bg-[#1c1c1c] text-white">
         <LoadingScreen />
         <Header />
+        <ScrollProgressBar />
 
         <main>
           <PageTransition>
@@ -88,6 +91,9 @@ function App() {
 
         {/* ✅ Chatbot Floating */}
         <Chatbot />
+
+        {/* ✅ Scroll to Top Button - positioned just above footer */}
+        <ScrollToTop />
 
         {/* Footer always visible */}
         <Footer />

@@ -14,50 +14,29 @@ export const useLoading = () => {
 export const LoadingProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState('');
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const location = useLocation();
 
-  // Handle route changes
+  // Handle route changes with smooth transitions
   useEffect(() => {
-    setIsLoading(true);
-    setLoadingMessage('Loading page...');
-
-    // Simulate loading time based on route
-    let loadingTime = 800; // Default loading time
-
-    // Customize loading time for different routes
-    if (location.pathname.includes('/room')) {
-      loadingTime = 1500; // Longer for 3D room
-      setLoadingMessage('Preparing 3D Experience...');
-    } else if (location.pathname.includes('/fan/')) {
-      loadingTime = 1000; // Medium for fan details
-      setLoadingMessage('Loading Anthem fan details...');
-    } else if (location.pathname === '/') {
-      loadingTime = 1200; // Medium for home page
-      setLoadingMessage('Welcome to Anthem Fans...');
-    } else if (location.pathname.includes('/products')) {
-      loadingTime = 900;
-      setLoadingMessage('Loading premium fans...');
-    } else if (location.pathname.includes('/about')) {
-      loadingTime = 900;
-      setLoadingMessage('Loading our story...');
-    } else if (location.pathname.includes('/support')) {
-      loadingTime = 800;
-      setLoadingMessage('Loading support center...');
-    } else if (location.pathname.includes('/dealer')) {
-      loadingTime = 800;
-      setLoadingMessage('Finding dealers near you...');
-    } else {
-      loadingTime = 800;
-      setLoadingMessage('Loading Anthem experience...');
+    if (isFirstLoad) {
+      setIsFirstLoad(false);
+      return;
     }
-
+    
+    // Start transition
+    setIsTransitioning(true);
+    setLoadingMessage('Loading page...');
+    
+    // Simulate brief loading for transition
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setIsTransitioning(false);
       setLoadingMessage('');
-    }, loadingTime);
+    }, 300);
 
     return () => clearTimeout(timer);
-  }, [location.pathname]);
+  }, [location.pathname, isFirstLoad]);
 
   // Manual loading controls
   const startLoading = (message = 'Loading...') => {
@@ -70,11 +49,25 @@ export const LoadingProvider = ({ children }) => {
     setLoadingMessage('');
   };
 
+  // Transition controls
+  const startTransition = (message = 'Loading...') => {
+    setIsTransitioning(true);
+    setLoadingMessage(message);
+  };
+
+  const stopTransition = () => {
+    setIsTransitioning(false);
+    setLoadingMessage('');
+  };
+
   const value = {
-    isLoading,
+    isLoading: isLoading || isTransitioning,
     loadingMessage,
+    isTransitioning,
     startLoading,
-    stopLoading
+    stopLoading,
+    startTransition,
+    stopTransition
   };
 
   return (

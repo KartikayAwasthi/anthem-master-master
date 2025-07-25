@@ -56,9 +56,9 @@ const Home = () => {
       <section className="py-8 flex flex-col justify-center items-center text-center bg-[#2f2f2f] snap-start w-full px-4 md:px-12 rounded-3xl shadow-xl my-6">
         <motion.h2
           className="text-4xl font-bold mb-4 text-[#ba6a5a]"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 20 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
         >
           Our Top Picks
         </motion.h2>
@@ -75,9 +75,9 @@ const Home = () => {
               <motion.div
                 className="bg-[#1c1c1c]/60 backdrop-blur-md p-6 rounded-2xl shadow-md hover:shadow-2xl transition border border-[#ba6a5a]/30 cursor-pointer"
                 whileHover={{ scale: 1.02 }}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 20 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
+                initial={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2, delay: index * 0.1 }}
               >
                 <img src={fan.image} alt={fan.name} className="h-44 w-full object-contain mb-4" />
                 <h3 className="text-2xl font-semibold mb-2 text-[#ba6a5a]">Anthem {fan.name}</h3>

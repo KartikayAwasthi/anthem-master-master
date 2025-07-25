@@ -16,6 +16,22 @@ const Header = () => {
   const [showProductsDropdown, setShowProductsDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
+  // Simple scroll functions to replace Lenis
+  const scrollTo = (target, options = {}) => {
+    if (typeof target === 'string') {
+      const element = document.querySelector(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else if (target && target.scrollIntoView) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const navLinks = [
     { to: "#home", label: "Home", section: "home" },
     { to: "/products", label: "Products" },
@@ -56,10 +72,7 @@ const Header = () => {
         window.location.href = "/";
       } else {
         // If already on home page, just scroll to top
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
+        scrollToTop();
       }
       setMobileMenuOpen(false);
     } else if (to.startsWith("#")) {
@@ -69,10 +82,7 @@ const Header = () => {
         const id = to.replace("#", "");
         const el = document.getElementById(id);
         if (el) {
-          window.scrollTo({
-            top: el.offsetTop - 64,
-            behavior: "smooth",
-          });
+          scrollTo(el);
         }
       } else {
         // If on a different page, navigate to home with the section

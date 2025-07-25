@@ -7,10 +7,9 @@ import ColorChangeTransition from "../components/ColorChangeTransition";
 // Import fan images
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
 import inaraImg from "../assets/Inara/Pearl white inara0110.png";
-import evaaraImg from "../assets/eVaara/fan1.png";
 import pedestalImg from "../assets/pedestal.webp";
 
-// eVaara variants
+// eVaara variants - Updated to use src/assets/eVaara images
 import evaaraImg1 from "../assets/eVaara/fan1.png";
 import evaaraImg2 from "../assets/eVaara/fan2.png";
 import evaaraImg3 from "../assets/eVaara/fan3.png";
@@ -98,7 +97,7 @@ const fanData = {
   },
   evaara: {
     name: "eVAARA",
-    image: evaaraImg,
+    image: evaaraImg1, // Updated to use first image from src/assets/eVaara
     price: "₹3,699",
     rating: 4.7,
     description:
@@ -226,7 +225,7 @@ const FanDetail = () => {
             className="space-y-6"
           >
             {/* Main Image */}
-            <div className="relative bg-gradient-to-br from-[#2f2f2f] to-[#1f1f1f] rounded-2xl p-8 shadow-2xl">
+            <div className="relative bg-gradient-to-br from-[#ffffff9a] to-[#ffffff91] rounded-2xl p-8 shadow-2xl">
               <img
                 src={getCurrentImage()}
                 alt={fan.name}
@@ -238,6 +237,14 @@ const FanDetail = () => {
                   <Heart className="w-5 h-5" />
                 </button>
               </div>
+              
+              {/* Localized Color Change Animation */}
+              <ColorChangeTransition 
+                isVisible={showColorTransition} 
+                onComplete={hideColorTransition}
+                type="fan"
+                localized={true}
+              />
             </div>
 
             {/* Color Variants */}
@@ -250,7 +257,7 @@ const FanDetail = () => {
                       key={index}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      className={`cursor-pointer p-3 rounded-xl border-2 transition-all duration-300 ${
+                      className={`cursor-pointer p-3 rounded-xl border-2 transition-all duration-300 bg-[#2f2f2f] ${
                         selectedColor?.name === color.name
                           ? "border-[#ba6a5a] bg-[#ba6a5a]/10"
                           : "border-gray-600 hover:border-[#e49385]"
@@ -431,7 +438,7 @@ const FanDetail = () => {
                 <Link key={id} to={`/fan/${id}`}>
                   <motion.div
                     whileHover={{ scale: 1.02 }}
-                    className="bg-[#2f2f2f] rounded-xl p-4 hover:bg-[#3f3f3f] transition-all duration-300"
+                    className="bg-[#2f2f2f] rounded-xl p-4 hover:bg-[#3a3a3a] transition-all duration-300"
                   >
                     <img
                       src={relatedFan.image}
@@ -446,11 +453,9 @@ const FanDetail = () => {
           </div>
         </motion.div>
       </div>
-
-      {/* Color Change Animation */}
-      <ColorChangeTransition isVisible={showColorTransition} onComplete={hideColorTransition} />
     </div>
   );
 };
 
 export default FanDetail;
+
