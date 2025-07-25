@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { ArrowLeft, Star, Zap, Volume2, Shield, ChevronDown, ChevronUp, ShoppingCart, Heart } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, Star, Zap, Volume2, Shield, ChevronDown, ChevronUp, ShoppingCart, Heart, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import ColorChangeTransition from "../components/ColorChangeTransition";
 
 // Import fan images
@@ -154,7 +154,10 @@ const fanData = {
   evaara: [
     "/evaara-creatives/1.jpg",
     "/evaara-creatives/2.jpg",
-    "/evaara-creatives/3.jpg"
+    "/evaara-creatives/3.jpg",
+    "/evaara-creatives/4.jpg",
+    "/evaara-creatives/5.jpg",
+    "/evaara-creatives/6.png"
   ],
   skyro: [
     "/Skyro-creatives/1.jpg",
@@ -177,6 +180,10 @@ const FanDetail = () => {
   const [showColorTransition, setShowColorTransition] = useState(false);
   const [isSpecsOpen, setIsSpecsOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  
+  // Fullscreen image viewer states
+  const [showFullscreen, setShowFullscreen] = useState(false);
+  const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
 
   useEffect(() => {
     if (fan?.colors?.length > 0) {
@@ -203,6 +210,58 @@ const FanDetail = () => {
   const getCurrentImage = () => {
     return fan?.colors && selectedColor ? selectedColor.image : fan?.image;
   };
+
+  // Fullscreen image viewer functions
+  const openFullscreen = (imageIndex) => {
+    setFullscreenImageIndex(imageIndex);
+    setShowFullscreen(true);
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeFullscreen = () => {
+    setShowFullscreen(false);
+    document.body.style.overflow = 'unset';
+  };
+
+  const nextImage = () => {
+    if (fanCreatives[fanId]) {
+      setFullscreenImageIndex((prev) => 
+        prev === fanCreatives[fanId].length - 1 ? 0 : prev + 1
+      );
+    }
+  };
+
+  const prevImage = () => {
+    if (fanCreatives[fanId]) {
+      setFullscreenImageIndex((prev) => 
+        prev === 0 ? fanCreatives[fanId].length - 1 : prev - 1
+      );
+    }
+  };
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      if (showFullscreen) {
+        switch (e.key) {
+          case 'Escape':
+            closeFullscreen();
+            break;
+          case 'ArrowLeft':
+            prevImage();
+            break;
+          case 'ArrowRight':
+            nextImage();
+            break;
+          default:
+            break;
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [showFullscreen, fanId]);
 
   if (!fan) {
     return (
@@ -235,6 +294,89 @@ const FanDetail = () => {
             <span>Back to Products</span>
           </Link>
         </motion.div>
+
+        {/* Fullscreen Image Viewer */}
+        <AnimatePresence>
+          {showFullscreen && fanCreatives[fanId] && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90"
+              onClick={closeFullscreen}
+            >
+              {/* Simple header with close button and image counter */}
+              <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-20">
+                <div className="bg-black/50 text-white text-sm px-4 py-2 rounded-full backdrop-blur-sm">
+                  <span className="font-medium">{fullscreenImageIndex + 1} / {fanCreatives[fanId].length}</span>
+                </div>
+                <button
+                  onClick={closeFullscreen}
+                  className="bg-black/50 text-white p-3 hover:bg-red-600/50 rounded-full transition-all duration-200 backdrop-blur-sm"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Simple navigation arrows */}
+              {fanCreatives[fanId].length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                    className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-4 hover:bg-[#ba6a5a]/50 rounded-full transition-all duration-200 z-20 backdrop-blur-sm"
+                  >
+                    <ChevronLeft className="w-8 h-8" />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                    className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-4 hover:bg-[#ba6a5a]/50 rounded-full transition-all duration-200 z-20 backdrop-blur-sm"
+                  >
+                    <ChevronRight className="w-8 h-8" />
+                  </button>
+                </>
+              )}
+
+              {/* Simple image viewer */}
+              <motion.div
+                className="relative flex items-center justify-center w-full h-full p-8"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <motion.div
+                  className="relative flex items-center justify-center rounded-lg shadow-2xl"
+                >
+                  <motion.img
+                    key={fullscreenImageIndex}
+                    src={fanCreatives[fanId][fullscreenImageIndex]}
+                    alt={`Creative ${fullscreenImageIndex + 1}`}
+                    className="select-none rounded-lg max-w-[80vw] max-h-[80vh] object-contain"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    draggable={false}
+                  />
+                </motion.div>
+              </motion.div>
+
+              {/* Simple bottom instructions */}
+              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 text-white/80 text-sm text-center z-20">
+                <div className="bg-black/50 rounded-xl px-6 py-3 backdrop-blur-sm">
+                  <div className="flex items-center justify-center space-x-6 text-xs">
+                    <span className="flex items-center space-x-1">
+                      <span className="text-[#e49385]">←→</span>
+                      <span>Navigate</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <span className="text-[#e49385]">ESC</span>
+                      <span>Close</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Product Images */}
@@ -455,16 +597,34 @@ const FanDetail = () => {
     </h3>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {fanCreatives[fanId].map((img, index) => (
-        <div
+        <motion.div
           key={index}
-          className="rounded-xl overflow-hidden shadow-lg bg-[#2f2f2f] hover:scale-[1.02] transition-all duration-300"
+          className="relative rounded-xl overflow-hidden shadow-lg bg-[#2f2f2f] hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
+          onClick={() => openFullscreen(index)}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <img
-            src={img}
-            alt={`Creative ${index + 1}`}
-            className="w-full h-64 object-cover"
-          />
-        </div>
+          {/* Simple image */}
+          <div className="relative overflow-hidden rounded-xl">
+            <img
+              src={img}
+              alt={`Creative ${index + 1}`}
+              className="w-full h-64 object-cover transition-all duration-300 group-hover:scale-105"
+            />
+          </div>
+          
+          {/* Simple overlay with zoom icon */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center rounded-xl">
+            <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 backdrop-blur-sm rounded-full p-3">
+              <ZoomIn className="w-6 h-6 text-white" />
+            </div>
+          </div>
+          
+          {/* Simple image counter */}
+          <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm">
+            <span className="font-medium">{index + 1}</span>
+          </div>
+        </motion.div>
       ))}
     </div>
   </motion.div>

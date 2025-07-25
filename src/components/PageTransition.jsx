@@ -109,7 +109,7 @@ const PageTransition = ({ children }) => {
               <div className="relative flex flex-col items-center">
                 {/* Spinning Logo */}
                 <motion.div
-                  className="w-28 h-28 rounded-full bg-white/10 p-3 backdrop-blur-xl shadow-xl shadow-[#e49385]/30 flex items-center justify-center"
+                  className="w-28 h-28 rounded-full bg-white p-3 shadow-xl shadow-[#e49385]/30 flex items-center justify-center"
                   animate={{ rotate: 360 }}
                   transition={{
                     duration: 2,
@@ -120,7 +120,7 @@ const PageTransition = ({ children }) => {
                   <img
                     src={anthemLogo}
                     alt="Anthem Logo"
-                    className="w-full h-full object-contain filter brightness-110"
+                    className="w-full h-full object-contain"
                   />
                 </motion.div>
 
