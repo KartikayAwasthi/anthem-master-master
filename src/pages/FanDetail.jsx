@@ -150,6 +150,26 @@ const fanData = {
   }
 };
 
+ const fanCreatives = {
+  evaara: [
+    "/evaara-creatives/1.jpg",
+    "/evaara-creatives/2.jpg",
+    "/evaara-creatives/3.jpg"
+  ],
+  skyro: [
+    "/Skyro-creatives/1.jpg",
+    "/Skyro-creatives/2.jpg",
+    "/Skyro-creatives/3.jpg"
+  ],
+  inara: [
+    "/Inara-creatives/1.png",
+    "/Inara-creatives/2.png",
+    "/Inara-creatives/3.jpg"
+  ]
+};
+
+
+
 const FanDetail = () => {
   const { fanId } = useParams();
   const fan = fanData[fanId];
@@ -421,6 +441,36 @@ const FanDetail = () => {
             </div>
           </motion.div>
         </motion.div>
+
+       {/* Creatives Section */}
+{fanCreatives[fanId] && (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: 0.5 }}
+    className="mt-12"
+  >
+    <h3 className="text-2xl font-semibold text-[#e49385] mb-6">
+      Creative Highlights
+    </h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {fanCreatives[fanId].map((img, index) => (
+        <div
+          key={index}
+          className="rounded-xl overflow-hidden shadow-lg bg-[#2f2f2f] hover:scale-[1.02] transition-all duration-300"
+        >
+          <img
+            src={img}
+            alt={`Creative ${index + 1}`}
+            className="w-full h-64 object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  </motion.div>
+)}
+
+
 
         {/* Related Products */}
         <motion.div
