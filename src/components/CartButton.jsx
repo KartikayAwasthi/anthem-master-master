@@ -60,12 +60,7 @@ const CartButton = ({ product, className = "" }) => {
         onClick={handleDecreaseQuantity}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        disabled={quantity <= 1}
-        className={`rounded-lg p-2 flex items-center justify-center transition-all duration-200 ${
-          quantity <= 1 
-            ? 'bg-gray-400/50 text-gray-300 cursor-not-allowed' 
-            : 'bg-white/20 hover:bg-white/30 text-white'
-        }`}
+        className="bg-white/20 hover:bg-white/30 text-white rounded-lg p-2 flex items-center justify-center transition-all duration-200"
       >
         <Minus size={16} />
       </motion.button>

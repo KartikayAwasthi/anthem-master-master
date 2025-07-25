@@ -545,15 +545,10 @@ const Cart = ({ isOpen, onClose }) => {
                               {/* Enhanced Decrease Button */}
                               <motion.button
                                 onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                className={`w-12 h-12 rounded-xl text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl ${
-                                  item.quantity <= 1 
-                                    ? 'bg-gray-400 cursor-not-allowed opacity-50' 
-                                    : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'
-                                }`}
+                                className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl"
                                 aria-label="Decrease quantity"
-                                disabled={item.quantity <= 1}
-                                whileHover={{ scale: item.quantity > 1 ? 1.05 : 1 }}
-                                whileTap={{ scale: item.quantity > 1 ? 0.95 : 1 }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                               >
                                 <Minus size={20} />
                               </motion.button>
