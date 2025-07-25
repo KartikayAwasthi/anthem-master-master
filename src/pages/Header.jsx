@@ -175,7 +175,7 @@ const Header = () => {
 
                   {showProductsDropdown && (
                     <div
-                      className="absolute left-0 top-full mt-3 w-[600px] bg-gray-200 border border-blue-100 rounded-2xl shadow-2xl p-6 z-50 animate-fade-in"
+                      className="absolute left-0 top-full mt-3 w-[600px] bg-[#2f2f2f] border border-blue-100 rounded-2xl shadow-2xl p-6 z-50 animate-fade-in"
                       onMouseEnter={() => setShowProductsDropdown(true)}
                       onMouseLeave={() => {
                         // Increase delay to 800ms before hiding dropdown
@@ -183,7 +183,7 @@ const Header = () => {
                       }}
                     >
                       <div>
-                        <div className="mb-2 text-lg font-bold text-[#1c1c1c]">Ceiling Fans</div>
+                        <div className="mb-2 text-lg font-bold text-[#fcfcfc]">Ceiling Fans</div>
                         <div className="flex gap-4 mb-4">
                           {ceilingFans.map((fan) => (
                             <Link
@@ -201,7 +201,7 @@ const Header = () => {
                             </Link>
                           ))}
                         </div>
-                        <div className="mb-2 text-lg font-bold text-[#1c1c1c]">Pedestal Fans</div>
+                        <div className="mb-2 text-lg font-bold text-[#fcfcfc]">Pedestal Fans</div>
                         <div className="flex gap-4">
                           {pedestalFans.map((fan) => (
                             <Link

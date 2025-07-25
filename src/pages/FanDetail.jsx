@@ -7,8 +7,8 @@ import { useCart } from "../contexts/CartContext";
 import CartButton from "../components/CartButton";
 
 // Import fan images
-const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
-const inaraImg = "/Inara/Pearl white inara0110.png";
+const skyroImg = "/Skyro/fan2.png";
+const inaraImg = "/Inara/fan5.png";
 const laraImg = "/Lara/fan1.png";
 const pedestalImg = "/pedestal.webp";
 
