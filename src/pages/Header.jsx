@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
+import { useCart } from "../contexts/CartContext";
+import Cart from "../components/Cart";
 
 // Import assets
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
@@ -14,7 +16,9 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [showProductsDropdown, setShowProductsDropdown] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { getCartItemsCount } = useCart();
 
   // Simple scroll functions to replace Lenis
   const scrollTo = (target, options = {}) => {
@@ -264,13 +268,29 @@ const Header = () => {
             )}
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-[#ba6a5a] bg-[#f8e3e0] rounded-full p-2 shadow hover:bg-[#f3d5cd] transition"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          {/* Cart and Mobile Menu Section */}
+          <div className="flex items-center gap-3">
+            {/* Cart Icon */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative text-[#ba6a5a] bg-[#f8e3e0] rounded-full p-2 shadow hover:bg-[#f3d5cd] transition-all duration-300 hover:scale-105"
+            >
+              <ShoppingCart size={24} />
+              {getCartItemsCount() > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#ba6a5a] text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold animate-pulse">
+                  {getCartItemsCount()}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-[#ba6a5a] bg-[#f8e3e0] rounded-full p-2 shadow hover:bg-[#f3d5cd] transition"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -326,6 +346,9 @@ const Header = () => {
         }
         .animate-slide-down { animation: slide-down 0.25s ease; }
       `}</style>
+
+      {/* Cart Sidebar */}
+      <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };

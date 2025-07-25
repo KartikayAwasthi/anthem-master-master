@@ -1,6 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ShoppingCart, Plus } from "lucide-react";
+import { useCart } from "../contexts/CartContext";
+import CartButton from "../components/CartButton";
 
 // Images
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
@@ -12,13 +15,19 @@ import fanRotatingGif from "../assets/fan-rotating.gif"; // New product image
 const Product = () => {
   const ceilingFans = [
     { name: "SKYRO", image: skyroImg, id: "skyro", price: "₹3,999", desc: "Premium BLDC technology with whisper-quiet operation" },
-    { name: "INARA", image: inaraImg, id: "inara", price: "₹4,499", desc: "Smart home ready with LED lighting integration" },
+    { name: "INARA", image: inaraImg, id: "inara", price: "₹4,499", desc: "Smart home ready with LED lighting integration and less noise" },
     { name: "eVAARA", image: evaaraImg, id: "evaara", price: "₹3,699", desc: "Exceptional value with modern aesthetics & efficiency" },
   ];
 
   const pedestalFans = [
     { name: "PEDESTAL PRO", image: pedestalImg, id: "pedestalpro", price: "₹2,999", desc: "Adjustable height with maximum airflow delivery" },
   ];
+
+  const handleAddToCart = (fan, e) => {
+    e.preventDefault(); // Prevent navigation when clicking add to cart
+    e.stopPropagation();
+    addToCart(fan);
+  };
 
   return (
     <div className="bg-[#1c1c1c] text-white min-h-screen pt-20 pb-16">
@@ -125,12 +134,15 @@ const Product = () => {
                   <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                     {fan.desc}
                   </p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-4">
                     <span className="text-2xl font-bold text-[#ba6a5a]">{fan.price}</span>
                     <span className="inline-flex items-center text-[#e49385] text-sm font-medium group-hover:translate-x-1 transition-transform duration-300">
                       View Details →
                     </span>
                   </div>
+                  
+                  {/* Add to Cart Button */}
+                  <CartButton product={fan} />
                 </div>
 
                 {/* Decorative Elements */}
@@ -213,12 +225,15 @@ const Product = () => {
                       <p className="text-gray-400 mb-6 leading-relaxed">
                         {fan.desc}
                       </p>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-6">
                         <span className="text-3xl font-bold text-[#ba6a5a]">{fan.price}</span>
                         <span className="inline-flex items-center text-[#e49385] font-medium group-hover:translate-x-1 transition-transform duration-300">
                           View Details →
                         </span>
                       </div>
+                      
+                      {/* Add to Cart Button */}
+                      <CartButton product={fan} className="py-4 px-6 text-lg" />
                     </div>
 
                     {/* Decorative Elements */}

@@ -3,6 +3,8 @@ import { useParams, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, Star, Zap, Volume2, Shield, ChevronDown, ChevronUp, ShoppingCart, Heart, X, ChevronLeft, ChevronRight, ZoomIn } from "lucide-react";
 import ColorChangeTransition from "../components/ColorChangeTransition";
+import { useCart } from "../contexts/CartContext";
+import CartButton from "../components/CartButton";
 
 // Import fan images
 import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
@@ -175,6 +177,7 @@ const fanData = {
 
 const FanDetail = () => {
   const { fanId } = useParams();
+  const { addToCart } = useCart();
   const fan = fanData[fanId];
   const [selectedColor, setSelectedColor] = useState(null);
   const [showColorTransition, setShowColorTransition] = useState(false);
@@ -184,6 +187,24 @@ const FanDetail = () => {
   // Fullscreen image viewer states
   const [showFullscreen, setShowFullscreen] = useState(false);
   const [fullscreenImageIndex, setFullscreenImageIndex] = useState(0);
+
+  // Handle add to cart
+  const handleAddToCart = () => {
+    if (fan) {
+      const cartItem = {
+        id: fan.id || fanId,
+        name: fan.name,
+        price: fan.price,
+        image: getCurrentImage(),
+        desc: fan.description,
+        color: selectedColor?.name || 'Default'
+      };
+      addToCart(cartItem);
+      
+      // Optional: Show success message
+      alert(`${fan.name} added to cart!`);
+    }
+  };
 
   useEffect(() => {
     if (fan?.colors?.length > 0) {
@@ -506,14 +527,19 @@ const FanDetail = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex-1 bg-gradient-to-r from-[#ba6a5a] to-[#e49385] text-white py-4 px-6 rounded-xl font-semibold flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                Add to Cart
-              </motion.button>
+              <div className="flex-1">
+                <CartButton 
+                  product={{
+                    id: fan.id || fanId,
+                    name: fan.name,
+                    price: fan.price,
+                    image: getCurrentImage(),
+                    desc: fan.description,
+                    color: selectedColor?.name || 'Default'
+                  }}
+                  className="py-4 px-6"
+                />
+              </div>
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

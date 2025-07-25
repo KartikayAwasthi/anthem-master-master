@@ -16,10 +16,12 @@ import PageTransition from "./components/PageTransition";
 import ScrollToTop from "./components/ScrollToTop";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import { LoadingProvider } from "./contexts/LoadingContext";
+import { CartProvider } from "./contexts/CartContext";
 
 function App() {
   return (
     <LoadingProvider>
+      <CartProvider>
         <div className="scroll-smooth bg-[#1c1c1c] text-white">
         <LoadingScreen />
         <Header />
@@ -98,6 +100,7 @@ function App() {
         {/* Footer always visible */}
         <Footer />
       </div>
+      </CartProvider>
     </LoadingProvider>
   );
 }

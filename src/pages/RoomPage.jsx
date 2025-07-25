@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import Room3D from '../components/Room3D';
+import { ShoppingCart } from 'lucide-react';
+import Room3D from '../components/Room3D';  
 import ColorChangeTransition from '../components/ColorChangeTransition';
+import { useCart } from '../contexts/CartContext';
+import CartButton from '../components/CartButton';
+
+// Import images for cart functionality
+import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
+import inaraImg from "../assets/Inara/Pearl white inara0110.png";
 
 const RoomPage = () => {
+  const { addToCart } = useCart();
+  
   const [wallColor, setWallColor] = useState('lightblue');
   const [backWallColor, setBackWallColor] = useState('lightblue');
   const [leftWallColor, setLeftWallColor] = useState('lightblue');
@@ -13,6 +22,24 @@ const RoomPage = () => {
   const [showFurniture, setShowFurniture] = useState(true);
   const [isBulbOn, setIsBulbOn] = useState(true);
   const [showColorTransition, setShowColorTransition] = useState(false);
+
+  // Fan data for cart functionality
+  const fanData = {
+    '/fan1.glb': {
+      name: 'SKYRO',
+      id: 'skyro',
+      price: '₹3,999',
+      desc: 'Premium BLDC technology with whisper-quiet operation',
+      image: skyroImg
+    },
+    '/fan2.glb': {
+      name: 'INARA', 
+      id: 'inara',
+      price: '₹4,499',
+      desc: 'Smart home ready with LED lighting integration',
+      image: inaraImg
+    }
+  };
 
   // Handle wall color change with transition animation
   const handleWallColorChange = (color) => {
@@ -251,6 +278,37 @@ const RoomPage = () => {
                   <label htmlFor="light" className="text-gray-300 text-sm sm:text-base">
                     Room Light
                   </label>
+                </div>
+              </div>
+
+              {/* Add to Cart Section */}
+              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-600">
+                <h4 className="text-base sm:text-lg font-semibold text-[#e49385] mb-3">Add Current Fan to Cart</h4>
+                <div className="bg-[#1c1c1c] p-4 rounded-lg border border-[#ba6a5a]/30">
+                  {fanData[fanModel] && (
+                    <div className="flex items-center gap-4 mb-4">
+                      <img 
+                        src={fanData[fanModel].image} 
+                        alt={fanData[fanModel].name} 
+                        className="w-16 h-16 object-contain bg-white/10 rounded-lg p-2"
+                      />
+                      <div className="flex-1">
+                        <h5 className="font-semibold text-white">Anthem {fanData[fanModel].name}</h5>
+                        <p className="text-xs text-gray-400 mt-1">{fanData[fanModel].desc}</p>
+                        <p className="text-lg font-bold text-[#ba6a5a] mt-2">{fanData[fanModel].price}</p>
+                      </div>
+                    </div>
+                  )}
+                  <CartButton 
+                    product={{
+                      id: fanData[fanModel]?.id,
+                      name: fanData[fanModel]?.name,
+                      price: fanData[fanModel]?.price,
+                      image: fanData[fanModel]?.image,
+                      desc: fanData[fanModel]?.desc
+                    }}
+                    className="py-3 px-4"
+                  />
                 </div>
               </div>
 
