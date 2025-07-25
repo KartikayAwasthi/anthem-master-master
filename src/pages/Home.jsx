@@ -4,9 +4,10 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Images
-const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
-const inaraImg = "/Inara/Pearl white inara0110.png";
+const skyroImg = "/Skyro/fan5.png";
+const inaraImg = "/Inara/fan2.png";
 const evaaraImg = "/eVaara/fan3.png"; // eVaara fan image
+const laraImg = "/Lara/fan1.png"; // Lara fan image
 const pedestalImg = "/pedestal.webp"; // Pedestal fan image
 
 const Home = () => {
@@ -65,11 +66,12 @@ const Home = () => {
 
         <p className="text-gray-300 mb-10">Engineered for power, style & silence.</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-7xl mx-auto">
           {[
             { image: skyroImg, name: "SKYRO", id: "skyro" },
             { image: inaraImg, name: "INARA", id: "inara" },
-            { image: evaaraImg, name: "eVAARA", id: "evaara" }
+            { image: evaaraImg, name: "eVAARA", id: "evaara" },
+            { image: laraImg, name: "LARA", id: "lara" }
           ].map((fan, index) => (
             <Link key={index} to={`/fan/${fan.id}`}>
               <motion.div
@@ -80,7 +82,7 @@ const Home = () => {
                 transition={{ duration: 0.2, delay: index * 0.1 }}
               >
                 <img src={fan.image} alt={fan.name} className="h-44 w-full object-contain mb-4" />
-                <h3 className="text-2xl font-semibold mb-2 text-[#ba6a5a]">Anthem {fan.name}</h3>
+                <h3 className="text-2xl font-semibold mb-2 text-[#ba6a5a]"> {fan.name}</h3>
                 <p className="text-gray-300 text-sm">Silent operation, smart control, superior airflow.</p>
                 <span className="inline-block mt-4 text-[#e49385] hover:underline">
                   View Details →
@@ -137,11 +139,12 @@ const Home = () => {
           </div>
 
           {/* Fan Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
             {[
               { image: skyroImg, name: "SKYRO", id: "skyro", desc: "Premium BLDC technology with whisper-quiet operation" },
               { image: inaraImg, name: "INARA", id: "inara", desc: "Smart home ready with LED lighting integration" },
-              { image: evaaraImg, name: "eVAARA", id: "evaara", desc: "Exceptional value with modern aesthetics & efficiency" }
+              { image: evaaraImg, name: "eVAARA", id: "evaara", desc: "Exceptional value with modern aesthetics" },
+              { image: laraImg, name: "LARA", id: "lara", desc: "Elegant design with superior performance and reliability" }
             ].map((fan, index) => (
               <Link key={index} to={`/fan/${fan.id}`}>
                 <motion.div
@@ -174,7 +177,7 @@ const Home = () => {
                   {/* Content */}
                   <div className="relative z-10 text-center">
                     <h3 className="text-3xl font-bold mb-3 text-white group-hover:text-[#ba6a5a] transition-colors duration-300">
-                      Anthem {fan.name}
+                       {fan.name}
                     </h3>
                     <p className="text-gray-400 text-base leading-relaxed mb-6 group-hover:text-gray-300 transition-colors duration-300">
                       {fan.desc}

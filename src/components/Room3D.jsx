@@ -4,6 +4,10 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
+// Preload fan models
+useGLTF.preload('/fan1.glb');
+useGLTF.preload('/fan2.glb');
+
 /* --- All the small components --- */
 function Wall({ position, rotation, color }) {
   return (
@@ -159,8 +163,17 @@ function CeilingBulb({ position, isOn }) {
 }
 
 function CeilingFan({ modelUrl, rotate, fanSpeed }) {
-  const { scene } = useGLTF(modelUrl);
   const fanRef = useRef();
+  let scene;
+  
+  try {
+    const gltf = useGLTF(modelUrl);
+    scene = gltf.scene;
+  } catch (error) {
+    console.warn(`Failed to load fan model: ${modelUrl}`, error);
+    // Fallback to a simple cylinder if model loading fails
+    scene = null;
+  }
 
   useFrame(() => {
     if (rotate && fanRef.current) {
@@ -169,6 +182,27 @@ function CeilingFan({ modelUrl, rotate, fanSpeed }) {
   });
 
   const scale = modelUrl.includes('fan2') ? 0.2 : 1.5;
+  
+  // If model failed to load, render a simple fallback fan
+  if (!scene) {
+    return (
+      <group ref={fanRef} position={[0, 2.8, 0]}>
+        <mesh position={[0, 0, 0]}>
+          <cylinderGeometry args={[0.1, 0.1, 0.2]} />
+          <meshStandardMaterial color="#444444" />
+        </mesh>
+        <mesh position={[0, -0.15, 0]} rotation={[0, 0, 0]}>
+          <boxGeometry args={[2, 0.05, 0.2]} />
+          <meshStandardMaterial color="#666666" />
+        </mesh>
+        <mesh position={[0, -0.15, 0]} rotation={[0, Math.PI / 2, 0]}>
+          <boxGeometry args={[2, 0.05, 0.2]} />
+          <meshStandardMaterial color="#666666" />
+        </mesh>
+      </group>
+    );
+  }
+  
   return <primitive object={scene} ref={fanRef} position={[0, 2.8, 0]} scale={scale} />;
 }
 

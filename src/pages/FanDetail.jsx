@@ -9,6 +9,7 @@ import CartButton from "../components/CartButton";
 // Import fan images
 const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
 const inaraImg = "/Inara/Pearl white inara0110.png";
+const laraImg = "/Lara/fan1.png";
 const pedestalImg = "/pedestal.webp";
 
 // eVaara variants - Updated to use public/eVaara images
@@ -19,20 +20,20 @@ const evaaraImg4 = "/eVaara/fan4.png";
 const evaaraImg5 = "/eVaara/fan5.png";
 
 // Skyro variants
-const skyroImg1 = "/Skyro/white skyro 2.0 May 120370.png";
-const skyroImg2 = "/Skyro/black skyro 2.0 May 120315.png";
-const skyroImg3 = "/Skyro/Blue skyro 2.0 May 120380.png";
-const skyroImg4 = "/Skyro/golden skyro 2.0 May 120352.png";
-const skyroImg5 = "/Skyro/purple skyro 2.0 May 120328.png";
+const skyroImg1 = "/Skyro/fan1.png";
+const skyroImg2 = "/Skyro/fan2.png";
+const skyroImg3 = "/Skyro/fan3.png";
+const skyroImg4 = "/Skyro/fan4.png";
+const skyroImg5 = "/Skyro/fan5.png";
 
 // Inara variants
-const inaraImg1 = "/Inara/Pearl white inara0110.png";
-const inaraImg2 = "/Inara/bakers brown 0106.png";
-const inaraImg3 = "/Inara/black inara 2.0 May 120319.png";
-const inaraImg4 = "/Inara/Blue Inara 2.0 May 120386.png";
-const inaraImg5 = "/Inara/golden inara 2.0 May 120356.png";
-const inaraImg6 = "/Inara/purple inara 2.0 May 120336.png";
-const inaraImg7 = "/Inara/white inara 2.0 May 120365.png";
+const inaraImg1 = "/Inara/fan1.png";
+const inaraImg2 = "/Inara/fan2.png";
+const inaraImg3 = "/Inara/fan3.png";
+const inaraImg4 = "/Inara/fan4.png";
+const inaraImg5 = "/Inara/fan5.png";
+const inaraImg6 = "/Inara/fan6.png";
+const inaraImg7 = "/Inara/fan7.png";
 
 const fanData = {
   skyro: {
@@ -125,6 +126,32 @@ const fanData = {
       { name: "Matte Black", image: evaaraImg3, code: "#2F2F2F" },
       { name: "Brushed Silver", image: evaaraImg4, code: "#C0C0C0" },
       { name: "Antique Gold", image: evaaraImg5, code: "#D4AF37" }
+    ]
+  },
+  lara: {
+    name: "LARA",
+    image: laraImg,
+    price: "₹4,199",
+    rating: 4.8,
+    description:
+      "LARA combines elegant design with superior performance and reliability. Perfect for those who appreciate refined aesthetics with cutting-edge technology.",
+    features: [
+      "Advanced BLDC motor technology",
+      "Elegant and sophisticated design",
+      "Superior build quality and reliability",
+      "Energy efficient performance",
+      "Premium finish and materials"
+    ],
+    specifications: {
+      "Motor Type": "BLDC Premium",
+      "Power Consumption": "30W",
+      "Air Delivery": "240 CMM",
+      "Speed": "310 RPM",
+      Sweep: "1200mm",
+      Warranty: "3 Years"
+    },
+    colors: [
+      { name: "Classic White", image: laraImg, code: "#FFFFFF" }
     ]
   },
   pedestalpro: {

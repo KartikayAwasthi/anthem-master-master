@@ -6,9 +6,10 @@ import { useCart } from "../contexts/CartContext";
 import CartButton from "../components/CartButton";
 
 // Images
-const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
-const inaraImg = "/Inara/Pearl white inara0110.png";
+const skyroImg = "/Skyro/fan6.png";
+const inaraImg = "/Inara/fan4.png";
 const evaaraImg = "/eVaara/fan1.png";
+const laraImg = "/Lara/fan1.png";
 const pedestalImg = "/pedestal.webp"; // Add your pedestal fan image here
 
 
@@ -17,6 +18,7 @@ const Product = () => {
     { name: "SKYRO", image: skyroImg, id: "skyro", price: "₹3,999", desc: "Premium BLDC technology with whisper-quiet operation" },
     { name: "INARA", image: inaraImg, id: "inara", price: "₹4,499", desc: "Smart home ready with LED lighting integration and less noise" },
     { name: "eVAARA", image: evaaraImg, id: "evaara", price: "₹3,699", desc: "Exceptional value with modern aesthetics & efficiency" },
+    { name: "LARA", image: laraImg, id: "lara", price: "₹4,199", desc: "Elegant design with superior performance and reliability" },
   ];
 
   const pedestalFans = [
@@ -131,7 +133,7 @@ const Product = () => {
                 {/* Content */}
                 <div className="relative z-10 text-center">
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-[#e49385] transition-colors duration-300">
-                    Anthem {fan.name}
+                     {fan.name}
                   </h3>
                   <p className="text-gray-400 text-sm mb-4 leading-relaxed">
                     {fan.desc}

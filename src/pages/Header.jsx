@@ -5,8 +5,8 @@ import { useCart } from "../contexts/CartContext";
 import Cart from "../components/Cart";
 
 // Import assets
-const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
-const inaraImg = "/Inara/Blue Inara 2.0 May 120386.png";
+const skyroImg = "/Skyro/fan5.png";
+const inaraImg = "/Inara/fan3.png";
 const evaaraImg = "/eVaara/fan3.png";
 const pedestalImg = "/pedestal.webp";
 const anthemLogo = "/Anthem-logo.png";
@@ -103,6 +103,7 @@ const Header = () => {
     { name: "SKYRO", image: skyroImg, id: "skyro" },
     { name: "INARA", image: inaraImg, id: "inara" },
     { name: "eVAARA", image: evaaraImg, id: "evaara" },
+    { name: "LARA", image: "/Lara/fan1.png", id: "lara" },
   ];
   const pedestalFans = [{ name: "PEDESTAL PRO", image: pedestalImg, id: "pedestalpro" }];
 
@@ -192,7 +193,7 @@ const Header = () => {
                                 // Immediate close on click
                                 setShowProductsDropdown(false);
                               }}
-                              className="bg-gradient-to-br from-[#f8e3e0] to-white border border-blue-100 rounded-xl p-4 text-center w-1/3 shadow hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 hover:border-[#ba6a5a] group"
+                              className="bg-gradient-to-br from-[#f8e3e0] to-white border border-blue-100 rounded-xl p-4 text-center w-1/4 shadow hover:shadow-xl transition-all duration-300 cursor-pointer hover:scale-105 hover:border-[#ba6a5a] group"
                             >
                               <img src={fan.image} alt={fan.name} className="h-20 mx-auto mb-3 group-hover:scale-110 transition-transform duration-300" />
                               <div className="font-semibold text-[#1c1c1c] group-hover:text-[#ba6a5a] transition-colors">{fan.name}</div>
