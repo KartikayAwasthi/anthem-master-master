@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cart Test</title>
+</head>
+<body>
+    <h1>Cart Testing</h1>
+    <p>Open the browser console and check the network tab to debug cart issues:</p>
+    <ol>
+        <li>Go to the products page</li>
+        <li>Try adding a product to cart</li>
+        <li>Open the cart sidebar</li>
+        <li>Check if images load properly</li>
+        <li>Test quantity increase/decrease buttons</li>
+        <li>Check console for any errors</li>
+    </ol>
+    
+    <h2>Debug Steps:</h2>
+    <ul>
+        <li>Check if product images exist in /public/ folder</li>
+        <li>Verify cart context is properly initialized</li>
+        <li>Test localStorage persistence</li>
+        <li>Verify button event handlers</li>
+    </ul>
+    
+    <script>
+        // Test localStorage cart functionality
+        console.log('Current cart in localStorage:', localStorage.getItem('anthem-cart'));
+        
+        // Test image paths
+        const imagePaths = [
+            '/Skyro/fan6.png',
+            '/Inara/fan4.png',
+            '/eVaara/fan1.png',
+            '/Lara/fan1.png',
+            '/fallback.jpg'
+        ];
+        
+        imagePaths.forEach(path => {
+            const img = new Image();
+            img.onload = () => console.log(`✅ Image loaded: ${path}`);
+            img.onerror = () => console.error(`❌ Image failed: ${path}`);
+            img.src = path;
+        });
+    </script>
+</body>
+</html>

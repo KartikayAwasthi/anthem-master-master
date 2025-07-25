@@ -16,6 +16,19 @@ const Cart = ({ isOpen, onClose }) => {
       removeFromCart(itemId);
     } else if (newQuantity <= 10) { // Max quantity limit
       updateQuantity(itemId, newQuantity);
+      // Add feedback animation
+      const itemElement = document.querySelector(`[data-item-id="${itemId}"]`);
+      if (itemElement) {
+        itemElement.classList.add('animate-pulse');
+        setTimeout(() => itemElement.classList.remove('animate-pulse'), 200);
+      }
+      // Show toast notification for quantity changes
+      if (newQuantity !== 1) {
+        console.log(`Quantity updated for item ${itemId}: ${newQuantity}`);
+      }
+    } else {
+      // Show max quantity reached message
+      console.warn(`Maximum quantity (10) reached for item ${itemId}`);
     }
   };
 
@@ -69,12 +82,49 @@ const Cart = ({ isOpen, onClose }) => {
     });
   };
 
-  const handleImageError = (itemId) => {
+  const handleImageError = (itemId, imgElement) => {
+    console.error(`Image failed to load for item ${itemId}:`, imgElement.src);
     setImageLoading(prev => {
       const newSet = new Set(prev);
       newSet.delete(itemId);
       return newSet;
     });
+    // Set fallback image - only if not already set to fallback
+    if (imgElement && imgElement.src !== '/fallback.jpg' && !imgElement.src.includes('fallback.jpg')) {
+      imgElement.src = '/fallback.jpg';
+    }
+  };
+
+  // Component for rendering cart item image with proper error handling
+  const CartItemImage = ({ item, className, isOverview = false }) => {
+    const [imageSrc, setImageSrc] = useState(item.image);
+    const [hasError, setHasError] = useState(false);
+
+    const handleError = () => {
+      if (!hasError && imageSrc !== '/fallback.jpg') {
+        console.log(`Image failed for ${item.name}, using fallback`);
+        setImageSrc('/fallback.jpg');
+        setHasError(true);
+      }
+    };
+
+    const handleLoad = () => {
+      console.log(`Image loaded successfully for ${item.name}`);
+      if (!isOverview) {
+        handleImageLoad(item.id);
+      }
+    };
+
+    return (
+      <img
+        src={imageSrc}
+        alt={item.name}
+        className={className}
+        onError={handleError}
+        onLoad={handleLoad}
+        loading="lazy"
+      />
+    );
   };
 
   // Format INR price with better formatting
@@ -135,6 +185,10 @@ const Cart = ({ isOpen, onClose }) => {
         price: item.price,
         quantity: item.quantity
       });
+      // Set loading state for images initially
+      if (item.image && !imageLoading.has(item.id)) {
+        setImageLoading(prev => new Set(prev).add(item.id));
+      }
     });
   }, [items]);
 
@@ -268,17 +322,10 @@ const Cart = ({ isOpen, onClose }) => {
                       <div className="flex flex-wrap gap-2">
                         {items.map((item, index) => (
                           <div key={item.id} className="flex items-center gap-2 bg-gray-50 px-3 py-1 rounded-lg border border-gray-200">
-                            <img 
-                              src={item.image} 
-                              alt={item.name} 
+                            <CartItemImage
+                              item={item}
                               className="w-6 h-6 object-contain"
-                              onError={(e) => {
-                                console.log(`Overview image failed for ${item.name}:`, item.image);
-                                e.target.src = '/fallback.jpg';
-                              }}
-                              onLoad={() => {
-                                console.log(`Overview image loaded for ${item.name}:`, item.image);
-                              }}
+                              isOverview={true}
                             />
                             <span className="text-xs font-medium text-gray-700">{item.name}</span>
                             <span className="bg-[#ba6a5a] text-white text-xs px-2 py-0.5 rounded-full font-bold">
@@ -295,6 +342,7 @@ const Cart = ({ isOpen, onClose }) => {
                       {items.map((item) => (
                         <motion.div
                           key={item.id}
+                          data-item-id={item.id}
                           className="bg-white rounded-xl p-4 border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                           layout
                           initial={{ opacity: 0, y: 20 }}
@@ -327,17 +375,9 @@ const Cart = ({ isOpen, onClose }) => {
                                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#ba6a5a]"></div>
                                 </div>
                               )}
-                              <img
-                                src={item.image}
-                                alt={item.name}
+                              <CartItemImage
+                                item={item}
                                 className="w-full h-full object-contain transition-transform duration-300 hover:scale-110"
-                                loading="lazy"
-                                onLoad={() => handleImageLoad(item.id)}
-                                onError={(e) => {
-                                  console.log(`Image failed to load for ${item.name}:`, item.image);
-                                  e.target.src = '/fallback.jpg';
-                                  handleImageError(item.id);
-                                }}
                               />
                               
                               {/* Image Overlay Actions */}
@@ -505,7 +545,11 @@ const Cart = ({ isOpen, onClose }) => {
                               {/* Enhanced Decrease Button */}
                               <motion.button
                                 onClick={() => handleQuantityChange(item.id, item.quantity - 1)}
-                                className="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg"
+                                className={`w-12 h-12 rounded-xl text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl ${
+                                  item.quantity <= 1 
+                                    ? 'bg-gray-400 cursor-not-allowed opacity-50' 
+                                    : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'
+                                }`}
                                 aria-label="Decrease quantity"
                                 disabled={item.quantity <= 1}
                                 whileHover={{ scale: item.quantity > 1 ? 1.05 : 1 }}
@@ -535,7 +579,11 @@ const Cart = ({ isOpen, onClose }) => {
                               {/* Enhanced Increase Button */}
                               <motion.button
                                 onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-                                className="w-12 h-12 rounded-xl bg-gradient-to-r from-[#ba6a5a] to-[#e49385] hover:from-[#e49385] hover:to-[#ba6a5a] text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-lg"
+                                className={`w-12 h-12 rounded-xl text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl ${
+                                  item.quantity >= 10 
+                                    ? 'bg-gray-400 cursor-not-allowed opacity-50' 
+                                    : 'bg-gradient-to-r from-[#ba6a5a] to-[#e49385] hover:from-[#e49385] hover:to-[#ba6a5a]'
+                                }`}
                                 aria-label="Increase quantity"
                                 disabled={item.quantity >= 10}
                                 whileHover={{ scale: item.quantity < 10 ? 1.05 : 1 }}

@@ -14,6 +14,7 @@ const CartButton = ({ product, className = "" }) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
+    console.log(`Added ${product.name} to cart:`, product);
   };
 
   const handleIncreaseQuantity = (e) => {
@@ -21,6 +22,7 @@ const CartButton = ({ product, className = "" }) => {
     e.stopPropagation();
     if (quantity < 10) { // Max quantity limit
       updateQuantity(product.id, quantity + 1);
+      console.log(`Increased quantity for ${product.name} to ${quantity + 1}`);
     }
   };
 
@@ -29,8 +31,10 @@ const CartButton = ({ product, className = "" }) => {
     e.stopPropagation();
     if (quantity > 1) {
       updateQuantity(product.id, quantity - 1);
+      console.log(`Decreased quantity for ${product.name} to ${quantity - 1}`);
     } else if (quantity === 1) {
       removeFromCart(product.id);
+      console.log(`Removed ${product.name} from cart`);
     }
   };
 
@@ -56,7 +60,12 @@ const CartButton = ({ product, className = "" }) => {
         onClick={handleDecreaseQuantity}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        className="bg-white/20 hover:bg-white/30 text-white rounded-lg p-2 flex items-center justify-center transition-all duration-200"
+        disabled={quantity <= 1}
+        className={`rounded-lg p-2 flex items-center justify-center transition-all duration-200 ${
+          quantity <= 1 
+            ? 'bg-gray-400/50 text-gray-300 cursor-not-allowed' 
+            : 'bg-white/20 hover:bg-white/30 text-white'
+        }`}
       >
         <Minus size={16} />
       </motion.button>
@@ -71,8 +80,10 @@ const CartButton = ({ product, className = "" }) => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         disabled={quantity >= 10}
-        className={`bg-white/20 hover:bg-white/30 text-white rounded-lg p-2 flex items-center justify-center transition-all duration-200 ${
-          quantity >= 10 ? 'opacity-50 cursor-not-allowed' : ''
+        className={`rounded-lg p-2 flex items-center justify-center transition-all duration-200 ${
+          quantity >= 10 
+            ? 'bg-gray-400/50 text-gray-300 cursor-not-allowed opacity-50' 
+            : 'bg-white/20 hover:bg-white/30 text-white'
         }`}
       >
         <Plus size={16} />
