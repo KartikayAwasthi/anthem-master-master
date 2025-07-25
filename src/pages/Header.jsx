@@ -5,11 +5,11 @@ import { useCart } from "../contexts/CartContext";
 import Cart from "../components/Cart";
 
 // Import assets
-import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import inaraImg from "../assets/Inara/Blue Inara 2.0 May 120386.png";
-import evaaraImg from "../assets/eVaara/fan3.png";
-import pedestalImg from "../assets/pedestal.webp";
-import anthemLogo from "../assets/Anthem-logo.png";
+const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
+const inaraImg = "/Inara/Blue Inara 2.0 May 120386.png";
+const evaaraImg = "/eVaara/fan3.png";
+const pedestalImg = "/pedestal.webp";
+const anthemLogo = "/Anthem-logo.png";
 
 const Header = () => {
   const location = useLocation();

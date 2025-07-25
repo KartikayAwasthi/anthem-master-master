@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
-import anthemLogo from '../assets/Anthem-logo.png';
+
+const anthemLogo = '/Anthem-logo.png';
 
 const PageTransition = ({ children }) => {
   const location = useLocation();

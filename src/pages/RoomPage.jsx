@@ -6,8 +6,8 @@ import { useCart } from '../contexts/CartContext';
 import CartButton from '../components/CartButton';
 
 // Import images for cart functionality
-import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import inaraImg from "../assets/Inara/Pearl white inara0110.png";
+const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
+const inaraImg = "/Inara/Pearl white inara0110.png";
 
 const RoomPage = () => {
   const { addToCart } = useCart();

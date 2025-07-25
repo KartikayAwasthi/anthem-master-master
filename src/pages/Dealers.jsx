@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Store } from "lucide-react";
-import amazonLogo from "../assets/amazon.png";
-import flipkartLogo from "../assets/flipkart.png";
+const amazonLogo = "/amazon.png";
+const flipkartLogo = "/flipkart.png";
 
 const certifiedDealers = [
   {

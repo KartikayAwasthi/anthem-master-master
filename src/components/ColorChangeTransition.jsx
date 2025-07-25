@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import anthemLogo from '../assets/Anthem-logo.png';
+
+const anthemLogo = '/Anthem-logo.png';
 
 const ColorChangeTransition = ({ isVisible, onComplete, type = 'fan', localized = false }) => {
   // Handle completion callback

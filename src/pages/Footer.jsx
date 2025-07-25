@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import anthemLogo from "../assets/Anthem-logo.png";
+const anthemLogo = "/Anthem-logo.png";
 
 const Footer = () => {
   return (

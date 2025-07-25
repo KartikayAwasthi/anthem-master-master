@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 // Assets
-import ceoImg from "../assets/ceo.jpg";
-import team1 from "../assets/team1.webp";
-import team2 from "../assets/team2.png";
-import team3 from "../assets/team3.jpg";
-import factory1 from "../assets/factory1.jpg";
-import factory2 from "../assets/factory2.jpg";
-import catalogPDF from "../assets/Anthem_Catalog.pdf";
+const ceoImg = "/ceo.jpg";
+const team1 = "/team1.webp";
+const team2 = "/team2.png";
+const team3 = "/team3.jpg";
+const factory1 = "/factory1.jpg";
+const factory2 = "/factory2.jpg";
+const catalogPDF = "/anthem_catalog.pdf";
 
 const About = () => {
   const team = [

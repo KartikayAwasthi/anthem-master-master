@@ -7,32 +7,32 @@ import { useCart } from "../contexts/CartContext";
 import CartButton from "../components/CartButton";
 
 // Import fan images
-import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import inaraImg from "../assets/Inara/Pearl white inara0110.png";
-import pedestalImg from "../assets/pedestal.webp";
+const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
+const inaraImg = "/Inara/Pearl white inara0110.png";
+const pedestalImg = "/pedestal.webp";
 
-// eVaara variants - Updated to use src/assets/eVaara images
-import evaaraImg1 from "../assets/eVaara/fan1.png";
-import evaaraImg2 from "../assets/eVaara/fan2.png";
-import evaaraImg3 from "../assets/eVaara/fan3.png";
-import evaaraImg4 from "../assets/eVaara/fan4.png";
-import evaaraImg5 from "../assets/eVaara/fan5.png";
+// eVaara variants - Updated to use public/eVaara images
+const evaaraImg1 = "/eVaara/fan1.png";
+const evaaraImg2 = "/eVaara/fan2.png";
+const evaaraImg3 = "/eVaara/fan3.png";
+const evaaraImg4 = "/eVaara/fan4.png";
+const evaaraImg5 = "/eVaara/fan5.png";
 
 // Skyro variants
-import skyroImg1 from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import skyroImg2 from "../assets/Skyro/black skyro 2.0 May 120315.png";
-import skyroImg3 from "../assets/Skyro/Blue skyro 2.0 May 120380.png";
-import skyroImg4 from "../assets/Skyro/golden skyro 2.0 May 120352.png";
-import skyroImg5 from "../assets/Skyro/purple skyro 2.0 May 120328.png";
+const skyroImg1 = "/Skyro/white skyro 2.0 May 120370.png";
+const skyroImg2 = "/Skyro/black skyro 2.0 May 120315.png";
+const skyroImg3 = "/Skyro/Blue skyro 2.0 May 120380.png";
+const skyroImg4 = "/Skyro/golden skyro 2.0 May 120352.png";
+const skyroImg5 = "/Skyro/purple skyro 2.0 May 120328.png";
 
 // Inara variants
-import inaraImg1 from "../assets/Inara/Pearl white inara0110.png";
-import inaraImg2 from "../assets/Inara/bakers brown 0106.png";
-import inaraImg3 from "../assets/Inara/black inara 2.0 May 120319.png";
-import inaraImg4 from "../assets/Inara/Blue Inara 2.0 May 120386.png";
-import inaraImg5 from "../assets/Inara/golden inara 2.0 May 120356.png";
-import inaraImg6 from "../assets/Inara/purple inara 2.0 May 120336.png";
-import inaraImg7 from "../assets/Inara/white inara 2.0 May 120365.png";
+const inaraImg1 = "/Inara/Pearl white inara0110.png";
+const inaraImg2 = "/Inara/bakers brown 0106.png";
+const inaraImg3 = "/Inara/black inara 2.0 May 120319.png";
+const inaraImg4 = "/Inara/Blue Inara 2.0 May 120386.png";
+const inaraImg5 = "/Inara/golden inara 2.0 May 120356.png";
+const inaraImg6 = "/Inara/purple inara 2.0 May 120336.png";
+const inaraImg7 = "/Inara/white inara 2.0 May 120365.png";
 
 const fanData = {
   skyro: {

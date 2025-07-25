@@ -6,11 +6,11 @@ import { useCart } from "../contexts/CartContext";
 import CartButton from "../components/CartButton";
 
 // Images
-import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import inaraImg from "../assets/Inara/Pearl white inara0110.png";
-import evaaraImg from "../assets/eVaara/fan1.png";
-import pedestalImg from "../assets/pedestal.webp"; // Add your pedestal fan image here
-import fanRotatingGif from "../assets/fan-rotating.gif"; // New product image
+const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
+const inaraImg = "/Inara/Pearl white inara0110.png";
+const evaaraImg = "/eVaara/fan1.png";
+const pedestalImg = "/pedestal.webp"; // Add your pedestal fan image here
+
 
 const Product = () => {
   const ceilingFans = [
@@ -22,6 +22,8 @@ const Product = () => {
   const pedestalFans = [
     { name: "PEDESTAL PRO", image: pedestalImg, id: "pedestalpro", price: "₹2,999", desc: "Adjustable height with maximum airflow delivery" },
   ];
+
+  const { addToCart } = useCart();
 
   const handleAddToCart = (fan, e) => {
     e.preventDefault(); // Prevent navigation when clicking add to cart

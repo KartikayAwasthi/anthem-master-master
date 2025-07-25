@@ -4,10 +4,10 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 // Images
-import skyroImg from "../assets/Skyro/white skyro 2.0 May 120370.png";
-import inaraImg from "../assets/Inara/Pearl white inara0110.png";
-import evaaraImg from "../assets/eVaara/fan3.png"; // eVaara fan image
-import pedestalImg from "../assets/pedestal.webp"; // Pedestal fan image
+const skyroImg = "/Skyro/white skyro 2.0 May 120370.png";
+const inaraImg = "/Inara/Pearl white inara0110.png";
+const evaaraImg = "/eVaara/fan3.png"; // eVaara fan image
+const pedestalImg = "/pedestal.webp"; // Pedestal fan image
 
 const Home = () => {
   return (

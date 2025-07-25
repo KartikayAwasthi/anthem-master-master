@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLoading } from '../contexts/LoadingContext';
-import anthemLogo from '../assets/Anthem-logo.png';
+
+const anthemLogo = '/Anthem-logo.png';
 
 const LoadingScreen = () => {
   const { isLoading, loadingMessage, isTransitioning } = useLoading();
